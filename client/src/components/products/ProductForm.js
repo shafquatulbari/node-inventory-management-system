@@ -44,7 +44,7 @@ const ProductForm = ({ product = null, onSave }) => {
     try {
       let response;
       if (product) {
-        response = await api.put(`products/${product.id}`, {
+        response = await api.put(`products/${product._id}`, {
           ...data,
           quantityChange: adjustedQuantity,
         });

@@ -53,7 +53,7 @@ const CategoryProducts = () => {
         )}
         <div className="grid grid-cols-3 gap-4">
           {products.map((product) => (
-            <div key={product.id} className="border p-4 rounded-lg shadow-md">
+            <div key={product._id} className="border p-4 rounded-lg shadow-md">
               <h3 className="text-xl font-bold mb-2">{product.name}</h3>
               <p>Price: ${product.price}</p>
               <p>Stock: {product.stock_level}</p>

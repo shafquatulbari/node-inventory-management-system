@@ -41,7 +41,7 @@ const CategoryList = () => {
   const handleDeleteCategory = async (categoryId) => {
     try {
       await api.delete(`categories/${categoryId}/`);
-      setCategories(categories.filter((cat) => cat.id !== categoryId));
+      setCategories(categories.filter((cat) => cat._id !== categoryId));
     } catch (error) {
       setError("Failed to delete category");
     }
@@ -52,12 +52,12 @@ const CategoryList = () => {
     try {
       if (editingCategory) {
         // Update existing category
-        const response = await api.put(`categories/${editingCategory.id}/`, {
+        const response = await api.put(`categories/${editingCategory._id}/`, {
           name,
           description,
         });
         const updatedCategories = categories.map((cat) =>
-          cat.id === editingCategory.id ? response.data : cat
+          cat._id === editingCategory._id ? response.data : cat
         );
         setCategories(updatedCategories);
       } else {
@@ -122,8 +122,8 @@ const CategoryList = () => {
       {/* Display category list */}
       <div>
         {categories.map((category) => (
-          <div key={category.id} className="border p-4 mb-2 rounded">
-            <Link to={`/categories/${category.id}/products`}>
+          <div key={category._id} className="border p-4 mb-2 rounded">
+            <Link to={`/categories/${category._id}/products`}>
               <h3 className="text-xl text-blue-500 hover:underline cursor-pointer">
                 {category.name}
               </h3>
@@ -139,7 +139,7 @@ const CategoryList = () => {
                 </button>
                 <button
                   className="bg-red-500 text-white p-2 rounded mt-2"
-                  onClick={() => handleDeleteCategory(category.id)}
+                  onClick={() => handleDeleteCategory(category._id)}
                 >
                   Delete
                 </button>

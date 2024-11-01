@@ -69,11 +69,14 @@ const ProductList = () => {
 
         <div className="grid grid-cols-3 gap-4">
           {products.map((product) => (
-            <div key={product.id} className="border p-4 rounded-lg shadow-md">
+            <div key={product._id} className="border p-4 rounded-lg shadow-md">
               <h3 className="text-xl font-bold mb-2">{product.name}</h3>
               <p>Price: ${product.price}</p>
               <p>Stock: {product.stock_level}</p>
-              <p>Category: {product.category.name || "No Category"}</p>{" "}
+              <p>
+                Category:{" "}
+                {product.category ? product.category.name : "No Category"}
+              </p>{" "}
               {/* Handle null category */}
               <p>{product.description}</p>
               {user && user.isAdmin && (
@@ -86,7 +89,7 @@ const ProductList = () => {
                   </button>
                   <button
                     className="bg-red-500 text-white p-2 rounded mt-2"
-                    onClick={() => handleDeleteProduct(product.id)}
+                    onClick={() => handleDeleteProduct(product._id)}
                   >
                     Delete
                   </button>

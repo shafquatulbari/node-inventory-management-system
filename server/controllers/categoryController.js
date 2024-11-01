@@ -47,11 +47,23 @@ const updateCategory = asyncHandler(async (req, res) => {
 const deleteCategory = asyncHandler(async (req, res) => {
   const category = await Category.findById(req.params.id);
   if (category) {
-    await category.remove();
+    await category.deleteOne();
     res.json({ message: "Category removed" });
   } else {
     res.status(404);
     throw new Error("Category not found");
+  }
+});
+
+// Get products by category
+const getProductsByCategory = asyncHandler(async (req, res) => {
+  const category = await Category.findById(req.params.id);
+  if (category) {
+    const products = await Product.find({ category: category.name }).populate(
+      "category",
+      "name"
+    );
+    res.json(products);
   }
 });
 
@@ -60,4 +72,5 @@ module.exports = {
   createCategory,
   updateCategory,
   deleteCategory,
+  getProductsByCategory,
 };
