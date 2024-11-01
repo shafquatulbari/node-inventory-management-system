@@ -1,5 +1,6 @@
 const asyncHandler = require("express-async-handler");
 const Category = require("../models/Category");
+const Product = require("../models/Product");
 
 // Get all categories
 const getCategories = asyncHandler(async (req, res) => {
@@ -56,14 +57,20 @@ const deleteCategory = asyncHandler(async (req, res) => {
 });
 
 // Get products by category
+// Get products by category
 const getProductsByCategory = asyncHandler(async (req, res) => {
+  // Find the category by ID
   const category = await Category.findById(req.params.id);
+
   if (category) {
-    const products = await Product.find({ category: category.name }).populate(
+    // Use the category's ObjectId (_id) to find products
+    const products = await Product.find({ category: category._id }).populate(
       "category",
       "name"
     );
     res.json(products);
+  } else {
+    res.status(404).json({ message: "Category not found" });
   }
 });
 
