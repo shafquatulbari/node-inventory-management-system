@@ -26,28 +26,33 @@ const ProductForm = ({ product = null, onSave }) => {
     e.preventDefault();
     setError("");
 
-    const adjustedQuantity = product
+    const adjustedStockLevel = product
       ? quantityOperation === "Add"
-        ? quantityChange
-        : -quantityChange
+        ? product.stock_level + quantityChange
+        : product.stock_level - quantityChange
       : quantity;
+
+    // Check for initial product addition and stock level adjustments
+    if (!product && quantity < 1) {
+      setError("Initial quantity must be at least 1.");
+      return;
+    } else if (product && adjustedStockLevel < 1) {
+      setError("Stock level cannot be reduced below 1.");
+      return;
+    }
 
     const data = {
       name,
       category,
       price,
-      quantity: adjustedQuantity,
-      stock_level: adjustedQuantity,
+      stock_level: adjustedStockLevel,
       description,
     };
 
     try {
       let response;
       if (product) {
-        response = await api.put(`products/${product._id}`, {
-          ...data,
-          quantityChange: adjustedQuantity,
-        });
+        response = await api.put(`products/${product._id}`, data);
       } else {
         response = await api.post("products/", data);
       }
@@ -92,23 +97,29 @@ const ProductForm = ({ product = null, onSave }) => {
           </option>
         ))}
       </select>
-      <input
-        type="number"
-        placeholder="Price"
-        value={price}
-        onChange={(e) => setPrice(e.target.value)}
-        className="w-full mb-4 p-2 border rounded"
-      />
+      <div className="mb-4 flex items-center">
+        <span className="text-gray-600 mr-2">$</span>
+        <input
+          type="number"
+          placeholder="Price"
+          value={price}
+          onChange={(e) => setPrice(e.target.value)}
+          className="w-full p-2 border rounded"
+        />
+      </div>
 
       {/* Quantity Input for New Product */}
       {!product && (
-        <input
-          type="number"
-          placeholder="Initial Quantity"
-          value={quantity}
-          onChange={(e) => setQuantity(parseInt(e.target.value) || 0)}
-          className="w-full mb-4 p-2 border rounded"
-        />
+        <div className="mb-4">
+          <label className="block mb-2 text-gray-600">Initial Quantity</label>
+          <input
+            type="number"
+            placeholder="Enter Quantity"
+            value={quantity}
+            onChange={(e) => setQuantity(parseInt(e.target.value) || 0)}
+            className="w-full p-2 border rounded"
+          />
+        </div>
       )}
 
       {/* Quantity Adjustment for Existing Product */}
