@@ -3,7 +3,9 @@ const Product = require("../models/Product");
 
 // Get all products
 const getProducts = asyncHandler(async (req, res) => {
-  const products = await Product.find({});
+  const products = await Product.find({}).populate("category", "name");
+  // With this, each product will have a category field that includes the name
+  //of the category, accessible as product.category.name in your frontend.
   res.json(products);
 });
 
@@ -34,11 +36,13 @@ const addProduct = asyncHandler(async (req, res) => {
 // Update product
 const updateProduct = asyncHandler(async (req, res) => {
   const { id } = req.params;
-  const { name, price, quantity, description, stock_level } = req.body;
+  const { name, category, price, quantity, description, stock_level } =
+    req.body;
   const product = await Product.findById(id);
 
   if (product) {
     product.name = name || product.name;
+    product.category = category || product.category;
     product.price = price || product.price;
     product.quantity = quantity || product.quantity;
     product.description = description || product.description;
