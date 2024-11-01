@@ -9,7 +9,7 @@ export const AuthProvider = ({ children }) => {
   const login = async (userData) => {
     try {
       const response = await api.get("user/user-info/"); // Fetch user info after login
-      // Set user data in the context with the username and is_admin flag
+      // Set user data in the context with the username and isAdmin flag
       setUser({
         username: response.data.username,
         isAdmin: response.data.isAdmin,
@@ -21,7 +21,6 @@ export const AuthProvider = ({ children }) => {
 
   const logout = () => {
     localStorage.removeItem("access_token");
-    localStorage.removeItem("refresh_token");
     setUser(null);
   };
 

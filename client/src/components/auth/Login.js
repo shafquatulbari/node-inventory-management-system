@@ -17,8 +17,7 @@ const Login = () => {
         username,
         password,
       });
-      localStorage.setItem("access_token", response.data.access);
-      localStorage.setItem("refresh_token", response.data.refresh);
+      localStorage.setItem("access_token", response.data.token);
       login({ username });
       navigate("/homepage");
     } catch (err) {

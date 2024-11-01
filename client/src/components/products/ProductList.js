@@ -36,7 +36,7 @@ const ProductList = () => {
 
   const handleDeleteProduct = async (id) => {
     try {
-      await api.delete(`products/delete/${id}/`);
+      await api.delete(`products/${id}/`);
       fetchProducts();
     } catch (error) {
       console.error("Error deleting product:", error);

@@ -37,18 +37,19 @@ const ProductForm = ({ product = null, onSave }) => {
       category,
       price,
       quantity: adjustedQuantity,
+      stock_level: adjustedQuantity,
       description,
     };
 
     try {
       let response;
       if (product) {
-        response = await api.put(`products/update/${product.id}/`, {
+        response = await api.put(`products/${product.id}`, {
           ...data,
           quantityChange: adjustedQuantity,
         });
       } else {
-        response = await api.post("products/add/", data);
+        response = await api.post("products/", data);
       }
 
       if (response.data.error) {
@@ -86,7 +87,7 @@ const ProductForm = ({ product = null, onSave }) => {
       >
         <option value="">Select Category</option>
         {categories.map((cat) => (
-          <option key={cat.id} value={cat.id}>
+          <option key={cat._id} value={cat._id}>
             {cat.name}
           </option>
         ))}
