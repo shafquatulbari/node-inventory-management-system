@@ -8,11 +8,11 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (userData) => {
     try {
-      const response = await api.get("user-info/"); // Fetch user info after login
+      const response = await api.get("user/user-info/"); // Fetch user info after login
       // Set user data in the context with the username and is_admin flag
       setUser({
         username: response.data.username,
-        is_admin: response.data.is_admin,
+        isAdmin: response.data.isAdmin,
       });
     } catch (err) {
       console.error("Failed to fetch user info:", err);

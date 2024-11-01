@@ -13,11 +13,11 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await api.post("register/", {
+      const response = await api.post("auth/register/", {
         username,
         email,
         password,
-        is_admin: isAdmin,
+        isAdmin: isAdmin,
       });
       if (response.status === 201) {
         navigate("/");

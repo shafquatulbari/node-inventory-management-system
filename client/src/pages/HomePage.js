@@ -22,7 +22,7 @@ const HomePage = () => {
   };
 
   useEffect(() => {
-    if (user && user.is_admin) {
+    if (user && user.isAdmin) {
       checkLowStock();
     }
   }, [user]);
@@ -33,14 +33,14 @@ const HomePage = () => {
       <div className="flex flex-col items-center justify-center h-screen">
         <h1 className="text-5xl font-bold mb-6">
           {user
-            ? user.is_admin
+            ? user.isAdmin
               ? `Hi, ${user.username}, welcome to the admin dashboard`
               : `Hello ${user.username}, welcome to the user dashboard`
             : "Loading..."}
         </h1>
 
         {/* Display low stock alert if admin */}
-        {user && user.is_admin && lowStockProducts.length > 0 && (
+        {user && user.isAdmin && lowStockProducts.length > 0 && (
           <div className="bg-yellow-100 text-yellow-700 p-4 mb-6 rounded">
             <strong>Warning:</strong> The following products have low stock:
             <ul className="list-disc pl-6 mt-2">

@@ -60,7 +60,7 @@ const CategoryProducts = () => {
               <p>{product.description}</p>
 
               {/* Only show Edit button if user is an admin */}
-              {user && user.is_admin && (
+              {user && user.isAdmin && (
                 <button
                   className="bg-yellow-500 text-white p-2 rounded mt-2 mr-2"
                   onClick={() => handleEditProduct(product)}

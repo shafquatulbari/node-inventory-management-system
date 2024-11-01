@@ -54,7 +54,7 @@ const ProductList = () => {
       <div className="p-6">
         <BackButton />
         <h1 className="text-3xl font-bold mb-6">Products</h1>
-        {user && user.is_admin && (
+        {user && user.isAdmin && (
           <button
             className="bg-green-500 text-white p-2 rounded mb-4"
             onClick={handleAddProduct}
@@ -76,7 +76,7 @@ const ProductList = () => {
               <p>Category: {product.category_name || "No Category"}</p>{" "}
               {/* Handle null category */}
               <p>{product.description}</p>
-              {user && user.is_admin && (
+              {user && user.isAdmin && (
                 <>
                   <button
                     className="bg-yellow-500 text-white p-2 rounded mt-2 mr-2"
